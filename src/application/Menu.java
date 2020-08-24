@@ -6,14 +6,14 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
-import Dao.GenreDao;
-import Dao.MovieDao;
-import Dao.RatingDao;
-import Entity.Movie;
-import Entity.Genre;
-import Entity.Rating;
+import dao.GenreDao;
+import dao.MovieDao;
+import dao.RatingDao;
+import entity.Movie;
+import entity.Genre;
+import entity.Rating;
 
-import Dao.MovieDao;
+import dao.MovieDao;
 
 public class Menu {
 

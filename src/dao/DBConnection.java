@@ -12,7 +12,7 @@ public class DBConnection {
 	
 	static Scanner scanner = new Scanner(System.in);
 
-	private final static String URL = "jdbc:mysql://uo3emq7vxcyxytdo:bikdplp4e0h9teynppoh-mysql.services.clever-cloud.com:3306/bikdplp4e0h9teynppoh";
+	private final static String URL = "jdbc:mysql://uo3emq7vxcyxytdo:eGmoOf4maoeJZUnBeOc5@bikdplp4e0h9teynppoh-mysql.services.clever-cloud.com:3306/bikdplp4e0h9teynppoh";
 	private final static String USERNAME = "uo3emq7vxcyxytdo";
 	private final static String PASSWORD = "eGmoOf4maoeJZUnBeOc5";
 	private static Connection connection;
