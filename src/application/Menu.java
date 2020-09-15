@@ -289,17 +289,38 @@ public class Menu {
 		String updatedGenre = scanner.nextLine();
 		genreDao.updateGenre(genreId, updatedGenre);
 	}
-//this method needs serious overhaul - inner join complexity
-	private List<Genre> displayAllMoviesByGenre() throws SQLException {
-		List<Genre> moviesByGenres = genreDao.displayAllMovieByGenre();
-		List<Movie> moviesList = movieDao.getMovie();
-		for(Genre g : moviesByGenres) {
-			for(Movie m : moviesList) {
-				System.out.println(g.getGenreName() +":"+" id: " + g.getGenreId() +" : " + m.getMovieTitle() + m.getGenres() );
+	// Menu Option 7 - Display Movies By Genre - Fixed 
+		private void displayAllMoviesByGenre() throws SQLException {
+			System.out.println("Enter the genre number below to see a list of movies for that genre: \n");
+			displayAllGenres();
+			
+			int genreId = intScanner.nextInt();
+			List<Movie> moviesByGenre = movieDao.displayAllMoviesByGenre(genreId);
+			String ratingName = "";
+			String genreName = genreDao.getGenreNameById(genreId);
+
+			System.out.println("Here is your list of movies under the genre '"+ genreName + "' \n\n");
+			printHeadingFormatting();
+			for ( Movie m : moviesByGenre ) {
+				ratingName = ratingDao.getRatingById(m.getRatings());
+				System.out.printf("%-22s %-8d %-11s %-22s %-22s %-18s %-17s %-20s \n",
+						m.getMovieTitle(), m.getMovieLength(), m.getReleaseDate(),
+						m.getDirector(), m.getLeadActor(), m.getRevenue(),
+						genreName, ratingName);
 			}
+			System.out.println("\n\n");
+		} 
+		private void printHeadingFormatting() {
+			
+			System.out.printf("%-22s %-8s %-11s %-22s %-22s %-18s %-17s %-20s \n", 
+					"Movie Title: ", "Length: ", "Released: ", "Director: ",
+					"Lead Actor: ", "Revenue: ", "Movie Genre: ", "Movie Rating: ");
+			String dash = "-".repeat(150);
+			System.out.println(dash);
+			
 		}
-		return moviesByGenres;
-	}
+
+
 private List<Genre> displayAllGenre() throws SQLException {
 	List<Genre> moviesByGenre = genreDao.getAllGenre();
 	int counter = 1;

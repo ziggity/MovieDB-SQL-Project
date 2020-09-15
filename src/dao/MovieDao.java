@@ -10,7 +10,6 @@ import java.util.List;
 
 import entity.Movie;
 
-
 public class MovieDao {
 	
 	private Connection connection;
@@ -22,6 +21,7 @@ public class MovieDao {
 	private final String DELETE_MOVIE_BY_ID_QUERY = "DELETE FROM movie WHERE id = ?";
 	private final String GET_MOVIES_BY_RATING = "SELECT * FROM movie WHERE rating_id=?";
 	private final String DISPLAY_ALL_MOVIE_BY_ID = "SELECT * FROM movie WHERE id = ?";
+	private final String DISPLAY_ALL_MOVIE_BY_GENRE = "SELECT * FROM movie WHERE genre_id = ?";
 
 	
 	public MovieDao() {
@@ -82,7 +82,7 @@ public class MovieDao {
 		}
 		return movies;
 	}
-
+	// Method to add each column into each element of an arraylist
 	private Movie populateMovies(int movieId, String movieTitle, int movieLength, String releaseDate, String director, String actor, String revenue, int genre, int ratings) {
 		// TODO Auto-generated method stub
 		return new Movie(movieId, movieTitle, movieLength, releaseDate, director, actor, revenue, genre, ratings);
@@ -95,10 +95,22 @@ public class MovieDao {
 			ps.executeUpdate();
 		}
 
-
+		// Added by Jeff - this makes a bit more sense here because it is more of 
+		// a query on the Movies table than the Ratings Table 
 	public List<Movie> getMovieByRating(int movieRating) throws SQLException {
 		PreparedStatement ps = connection.prepareStatement(GET_MOVIES_BY_RATING);
 		ps.setInt(1, movieRating);
+		ResultSet rs = ps.executeQuery();
+		List<Movie> movies = new ArrayList<Movie>();
+		while ( rs.next() ) {
+			movies.add( populateMovies( rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getInt(8), rs.getInt(9)));
+		}
+		return movies;
+	}
+	
+	public List<Movie> displayAllMoviesByGenre(int providedGenreId) throws SQLException {
+		PreparedStatement ps = connection.prepareStatement(DISPLAY_ALL_MOVIE_BY_GENRE);
+		ps.setInt(1, providedGenreId);
 		ResultSet rs = ps.executeQuery();
 		List<Movie> movies = new ArrayList<Movie>();
 		while ( rs.next() ) {
